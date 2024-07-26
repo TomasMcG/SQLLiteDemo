@@ -37,6 +37,8 @@ try {
 }
 catch(Exception E){Toast.makeText(MainActivity.this, "Error creating customer", Toast.LENGTH_SHORT).show();
 }
+
+DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
 }
         });
 
