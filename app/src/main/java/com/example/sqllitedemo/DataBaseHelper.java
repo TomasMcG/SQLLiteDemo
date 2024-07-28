@@ -40,9 +40,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_CUSTOMER_AGE, customerModel.getAge());
         cv.put(COLUMN_ACTIVE_CUSTOMER, customerModel.isActive()); //associate each hash value with value from get
         //auto increment id column in database, no need to do cv put here, would need to specify in content values if not auto increment
-
-
-        return true;
+        long insert = db.insert(CUSTOMER_TABLE, null, cv);
+        //returns positive number for success, negative if failure
+        if (insert == -1) {
+            return false;
+        }
+        else  {
+            return true;
+        }
+      }
 
     }
-}
+
