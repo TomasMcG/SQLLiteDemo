@@ -19,6 +19,12 @@ public class MainActivity extends AppCompatActivity {
     EditText et_name, et_age;
     Switch sw_activeCustomer;
     ListView lv_customerList;
+
+    ArrayAdapter customerArrayAdapter;
+    DataBaseHelper dataBaseHelper;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
         et_name = findViewById(R.id.et_name);
         sw_activeCustomer = findViewById(R.id.sw_active);
         lv_customerList = findViewById(R.id.lv_customerList);
+
+
+         dataBaseHelper = new DataBaseHelper(MainActivity.this);
+       // List<CustomerModel> everyone = dataBaseHelper.getEveryone(); old way for everyone
+        //the type is a list, need list of customer model, mainActivity.this for conext, simple list 1 is a predefined adapter that gives 1 string per line,
+        // this is ismplest array adapter, the last parameter is the list of items you want to show in array adapter.
+        //associate the array dapater to control on screen
+        showCustomersOnListView(dataBaseHelper);
 
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +65,7 @@ catch(Exception E){
 DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
                 boolean success = dataBaseHelper.addOne(customerModel);//add the created customer to the database with method
                 Toast.makeText(MainActivity.this, "Success=" + success, Toast.LENGTH_SHORT).show();
+                showCustomersOnListView(dataBaseHelper);
             }
         });
 
@@ -58,18 +73,25 @@ DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
             @Override
             public void onClick(View view) {
 
-                DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
-                List<CustomerModel> everyone = dataBaseHelper.getEveryone();
-                ArrayAdapter customerArrayAdapter = new ArrayAdapter<CustomerModel>(MainActivity.this, android.R.layout.simple_list_item_1,everyone);
+                 dataBaseHelper = new DataBaseHelper(MainActivity.this);
+                //List<CustomerModel> everyone = dataBaseHelper.getEveryone();
+
+
+
                 //the type is a list, need list of customer model, mainActivity.this for conext, simple list 1 is a predefined adapter that gives 1 string per line,
                 // this is ismplest array adapter, the last parameter is the list of items you want to show in array adapter.
                 //associate the array dapater to control on screen
-                lv_customerList.setAdapter(customerArrayAdapter);
+                showCustomersOnListView(dataBaseHelper);
                 //can now see in the list view on the screen our list of customers
 
                // Toast.makeText(MainActivity.this, everyone.toString(), Toast.LENGTH_SHORT).show();
 
             }
         });
+    }
+
+    private void showCustomersOnListView(DataBaseHelper dataBaseHelper) {
+        customerArrayAdapter = new ArrayAdapter<CustomerModel>(MainActivity.this, android.R.layout.simple_list_item_1, dataBaseHelper.getEveryone());
+        lv_customerList.setAdapter(customerArrayAdapter);
     }
 }
