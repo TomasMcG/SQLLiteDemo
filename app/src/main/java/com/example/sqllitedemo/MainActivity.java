@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -59,7 +60,14 @@ DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
 
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
                 List<CustomerModel> everyone = dataBaseHelper.getEveryone();
-                Toast.makeText(MainActivity.this, everyone.toString(), Toast.LENGTH_SHORT).show();
+                ArrayAdapter customerArrayAdapter = new ArrayAdapter<CustomerModel>(MainActivity.this, android.R.layout.simple_list_item_1,everyone);
+                //the type is a list, need list of customer model, mainActivity.this for conext, simple list 1 is a predefined adapter that gives 1 string per line,
+                // this is ismplest array adapter, the last parameter is the list of items you want to show in array adapter.
+                //associate the array dapater to control on screen
+                lv_customerList.setAdapter(customerArrayAdapter);
+                //can now see in the list view on the screen our list of customers
+
+               // Toast.makeText(MainActivity.this, everyone.toString(), Toast.LENGTH_SHORT).show();
 
             }
         });
