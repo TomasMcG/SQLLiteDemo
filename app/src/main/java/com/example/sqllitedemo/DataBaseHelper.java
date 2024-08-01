@@ -75,7 +75,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                   CustomerModel newCustomer = new CustomerModel(customerID,customerName,customerAge,customerActive);
                   returnList.add(newCustomer);
               }
-              while(cursor.moveToFirst()); //do it while there is new lines
+              while(cursor.moveToNext()); //do it while there is new lines for move to first, we use move to Next, proceed one at a time, don't repeat the first one
 
           }
           else{

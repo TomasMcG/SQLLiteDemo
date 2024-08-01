@@ -10,6 +10,8 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     //references to buttons and other controls on the layout
     Button btn_add, btn_viewAll;
@@ -54,7 +56,10 @@ DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
         btn_viewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "View all button", Toast.LENGTH_SHORT).show();
+
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
+                List<CustomerModel> everyone = dataBaseHelper.getEveryone();
+                Toast.makeText(MainActivity.this, everyone.toString(), Toast.LENGTH_SHORT).show();
 
             }
         });
