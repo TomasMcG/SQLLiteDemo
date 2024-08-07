@@ -54,7 +54,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
       }
 
-      public boolean DeleteOne(CustomerModel customerModel){
+      public boolean deleteOne(CustomerModel customerModel){
         //find customerModel in the database. if it is found, delete it and return true
           // if it is not found, return false
           //DAO style, Data Acess Object, best practice in software design, can do in main but best to separate funcitons of app

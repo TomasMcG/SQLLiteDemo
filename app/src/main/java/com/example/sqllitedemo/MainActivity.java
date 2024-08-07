@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,6 +67,21 @@ DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
                 boolean success = dataBaseHelper.addOne(customerModel);//add the created customer to the database with method
                 Toast.makeText(MainActivity.this, "Success=" + success, Toast.LENGTH_SHORT).show();
                 showCustomersOnListView(dataBaseHelper);
+            }
+        });
+        //item click listener gives you a nubmer on which guy was clicked
+        lv_customerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //the adapterView is the parent,view is the list view the int i is position, long l is the id
+                //position is which item was clicked in the list
+                //parent of the listener is the list view,adapter view here. put in the i position, tells you which person clicked, error datatype, needcustomer model,ew have generic object,
+                //because we have customermodel in the list can safely do a cast
+                CustomerModel clickedCustomer = (CustomerModel) adapterView.getItemAtPosition(i);
+                dataBaseHelper.deleteOne(clickedCustomer);
+                //update the list view
+                showCustomersOnListView(dataBaseHelper);
+                Toast.makeText(MainActivity.this, "Deleted" + clickedCustomer.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
