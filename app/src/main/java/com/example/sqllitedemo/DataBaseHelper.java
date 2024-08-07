@@ -54,6 +54,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
       }
 
+      public boolean DeleteOne(CustomerModel customerModel){
+        //find customerModel in the database. if it is found, delete it and return true
+          // if it is not found, return false
+          //DAO style, Data Acess Object, best practice in software design, can do in main but best to separate funcitons of app
+          SQLiteDatabase db = this.getWritableDatabase();
+          String queryString = "Delete From " + CUSTOMER_TABLE +" Where " + COLUMN_ID + " = " + customerModel.getId();
+                  //we want to dleete the person with the same id value
+          Cursor cursor = db.rawQuery(queryString, null);
+          //cursor is result set, there would be one result for matching the id number
+
+          if(cursor.moveToFirst()){return true;}else{return false;}
+
+
+      }
+
       public List<CustomerModel> getEveryone(){
         List<CustomerModel> returnList = new ArrayList<>();
         //need to get data from the database
